@@ -53,10 +53,10 @@ serverless offline
 Once up and running you can checkout the created items in the follow AWS services. Be sure to verify that your region matches the region in your local AWS creds file which in-turn is the region where serverless will deploy everything to.
 
 * https://console.aws.amazon.com/events (click on events -> rules)
-  * There will be 2 `covid19datapuller-[dev|prod]` event triggers created for both the dev/prod functions
+  * There will be 2 `covid19datapuller-[dev|prod]` event triggers created for both the dev/prod functions (every 60m, you can change this in `serverless.yaml`)
   
 * https://s3.console.aws.amazon.com/s3/home
-  * There will be 2 `covid19datapuller-[dev|prod]` buckets created, one for each dev/prod function, where the pulled data will be written in JSON format and annotated w/ the function version and timestamp the data was pulled
+  * There will be 2 `covid19datapuller-[dev|prod]` buckets created, one for each dev/prod function, where the pulled data will be written in JSON format and annotated w/ the function version and timestamp the data was pulled. (every 60m)
   
 * https://console.aws.amazon.com/lambda
   * There should be 2 `covid19datapuller-[dev|prod]` functions, one for each serverless "stage" (dev/prod)
