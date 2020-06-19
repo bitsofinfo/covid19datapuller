@@ -1,0 +1,60 @@
+
+service: covid19datapuller
+
+plugins:
+  - serverless-plugin-scripts
+  - serverless-offline
+
+custom:
+  scripts:
+    commands:
+      install-mods: "pip3 install requests -t ./"
+
+provider:
+  name: aws
+  runtime: python3.8
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+
+  environment:
+    VERSION: "${file(./current-version.yaml):version}"
+    TARGET_BUCKET: ${self:service.name}-${opt:stage, 'dev'}
+
+  deploymentBucket:
+    maxPreviousDeploymentArtifacts: 10 
+    blockPublicAccess: true 
+    serverSideEncryption: AES256 
+
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Action:
+        - 's3:*'
+      Resource:
+        - 'arn:aws:s3:::${self:provider.environment.TARGET_BUCKET}'
+        - 'arn:aws:s3:::${self:provider.environment.TARGET_BUCKET}/*'
+
+
+functions:
+  fetch:
+    handler: handler.fetch
+    events:
+      - schedule:
+          enabled: true
+          rate: rate(60 minutes)
+          inputTransformer:
+            inputPathsMap:
+              eventTime: '$.time'
+            inputTemplate: '{"invokedAt": <eventTime>, "someProp": "someValue"}'
+
+resources:
+  Resources:
+    NewResource:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:provider.environment.TARGET_BUCKET}
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: true
+          BlockPublicPolicy: true
+          IgnorePublicAcls: true
+          RestrictPublicBuckets: true
+

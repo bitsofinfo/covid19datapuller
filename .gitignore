@@ -1,0 +1,33 @@
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+__pycache__
+
+npm-debug.log
+package-lock.json
+
+# Serverless directories
+.serverless
+
+bin
+certifi*
+chardet*
+idna*
+node_modules
+requests*
+urllib*
