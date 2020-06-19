@@ -10,7 +10,7 @@ This demo will get you up and running with the [Serverless framework](https://ww
 
 ## Overview
 
-1. Git clone this project
+1. Clone this project and `cd covid19datapuller/`
 
 2. Install Serverless:
 ```
