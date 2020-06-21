@@ -71,6 +71,8 @@ Once up and running you can checkout the created items in the follow AWS service
 
 `serverless deploy --stage [env]` could be invoked via a simple CICD process which also would seed the `current-version.yaml` file with the current git tag/branch identifier which would subsequently tag the function versions + data written to disk.
 
+Lambda aliases: https://www.serverless.com/plugins/serverless-aws-alias/ 
+
 ## Cleanup
 
 
